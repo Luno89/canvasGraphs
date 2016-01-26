@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="canvasGraphs.js"></script>
+    <script src="husl.js"></script>
+</head>
+<body>
+    <div id="pieGraphPanel" class="thumbnail boxShadow"><div id="pieGraphBody" class="" style="width : 500px; height : 500px;"></div></div>
+</body>
+</html>
+<script>
+    // var HUSL = ($.husl);
+    // var gaugeSettings = { rangeStart: 0, rangeEnd: 100, colorStart: 13, colorEnd: 125 };
+    var gaugeSettings = {};
+    //var gaugeInvtSettings = { rangeStart: 0, rangeEnd: 100, colorStart: 125, colorEnd: 13 };
+    var gaugeInvtSettings = {};
+    // var barSettings = { rangeStart: 0, rangeEnd: 100, colorStart: 0, colorEnd: 360, yLabel: 'Multi-Bar Graph' };
+    var barSettings = {};
+    // var lineSettings = { rangeStart: 0, rangeEnd: 100, colorStart: 0, colorEnd: 360, labels: ['10/13/14', '10/18/45', '10/13/16', '10/13/15', '10/13/17', '10/13/19'], yLabel: 'Line Graph' };
+    var lineSettings = {};
+    // var data = [{ value: 20, label: 'Something1' }, { value: 40, label: 'Some' }, { value: 60, label: 'Something3' }, { value: 80, label: 'Something4' }, { value: 100, label: 'Something5' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }, { value: 80, label: 'Something4' }];
+    var data = [];
+    var multiData = [{ list: [{ value: 10 }, { value: 20 }], label: 'Something1' }, { list: [{ value: 30 }, { value: 40 }], label: 'Something2' }, { list: [{ value: 50 }, { value: 60 }], label: 'Something3' }, { list: [{ value: 70 }, { value: 80 }], label: 'Something3' }];
+    // var lineData = [[{ value: 8, label: 'smallValue' }, { value: 16, label: 'smallValue' }, { value: 50, label: 'smallValue' }, { value: 5, label: 'smallValue' }, { value: 70, label: 'smallValue' }, { value: 65, label: 'smallValue' }], [{ value: 18, label: 'smallValue' }, { value: 26, label: 'smallValue' }, { value: 90, label: 'smallValue' }, { value: 40, label: 'smallValue' }, { value: 20, label: 'smallValue' }, { value: 35, label: 'smallValue' }]];
+    var lineData = [];
+
+    // var gaugeData = { value: 80, label: 'percentage' };
+    var gaugeData = {};
+
+    //var halfGaugeData = { value: 80, label: 'percentage' };;
+    // var tachData = { value: 80, label: 'percentage' };;
+    //var pieData = [{ value: 30, label: 'aPart' }, { value: 30, label: 'another' }, { value: 30, label: 'something' }, { value: 30, label: 'something' }, { value: 30, label: 'something' }, { value: 60, label: 'something' }];
+    var labelData = "";
+    var subscribeMenuTR = [];
+    var menuTitle = "";
+    var GraphType = '';
+    var lastGraphListResize = 0;
+    //var graphsListForResize = [barGraph, multiGraph, lineGraph, gauge, halfGauge, pieGraph, doughnut, tach];
+    var graphsListForResize = [];
+
+    window.addEventListener('resize', function (evt) {
+        var curTime = (new Date).getTime();
+        var timeDif = curTime - lastGraphListResize;
+
+        if (timeDif < 1000 / 20) {
+            return;
+        };
+        lastGraphListResize = curTime;
+        for (var i = 0; i < graphsListForResize.length; i++) {
+            var temp = graphsListForResize[i];
+            temp.resizeGraph(temp);
+        }
+
+    });
+
+    function showPieChart() {
+        var Piegraph = new renderGraph(barSettings);
+        Piegraph.createPieGraph(data, 'pieGraphBody', false);
+        graphsListForResize = [Piegraph];
+    }
+
+    function dayJanuary192015PieChart() {
+        labelData = "January 19, 2015"
+        barSettings = { rangeStart: 0, rangeEnd: 3194, colorStart: 0, colorEnd: 360, yLabel: "Transaction Count" };
+        data = [{ value: 0, label: '06:00 AM' }, { value: 5, label: '07:00 AM' }, { value: 53, label: '08:00 AM' }, { value: 177, label: '09:00 AM' }, { value: 242, label: '10:00 AM' }, { value: 227, label: '11:00 AM' }, { value: 237, label: '12:00 PM' }, { value: 223, label: '01:00 PM' }, { value: 129, label: '02:00 PM' }, { value: 155, label: '03:00 PM' }, { value: 136, label: '04:00 PM' }, { value: 20, label: '05:00 PM' }, { value: 2, label: '06:00 PM' }, { value: 0, label: '7:00 PM' }, { value: 0, label: '8:00 PM' }, { value: 0, label: '9:00 PM' }];
+
+        showPieChart();
+    }
+
+    (function () {
+        dayJanuary192015PieChart();
+    })();
+</script>
